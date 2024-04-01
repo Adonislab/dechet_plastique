@@ -2,7 +2,6 @@ import streamlit as st
 from tensorflow.keras.models import load_model
 import numpy as np
 from PIL import Image
-import cv2
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 
 
@@ -24,14 +23,21 @@ lien = st.sidebar.text_input("Link", value="www.linkedin.com/in/tanguy-adonis-no
 hommage = st.sidebar.text_area("Hommage au professeur", value="Cette application est une oeuvre de l'application du cours de Kevin degila. Mes profondes gratuites à lui pour ce cours, ci-dessous je vous invite à faire un tour sur son compte youtube.")
 ressource = st.sidebar.text_input("Ressource", value="https://www.youtube.com/results?search_query=kevin+degila")
 
+
+
+
+
 def predict(upload):
     img = Image.open(upload)
     img = np.asarray(img)
-    img_resize = cv2.resize(img, (224, 224))
+    img_resize = np.array(Image.fromarray(img).resize((224, 224)))
     img_resize = np.expand_dims(img_resize, axis=0)
     pred = model.predict(img_resize)
     rec = pred[0][0]
     return rec
+
+
+
 
 st.title("Poubelle Intelligente : Détection d'un objet recyclable")
 
