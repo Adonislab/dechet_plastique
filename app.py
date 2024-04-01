@@ -5,7 +5,7 @@ from PIL import Image
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 
 
-@st.cache_data()
+@st.cache(allow_output_mutation=True)
 def load():
     model_path = "best_model.h5"
     model = load_model(model_path, compile=False)
