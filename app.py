@@ -2,7 +2,7 @@ import streamlit as st
 from tensorflow.keras.models import load_model
 import numpy as np
 from PIL import Image
-from tensorflow.keras.preprocessing.image import img_to_array, load_img
+
 
 
 @st.cache(allow_output_mutation=True)
@@ -16,12 +16,12 @@ model = load()
 
 # Ajout des informations sur le nom, le prénom, le lien et l'hommage pour le professeur
 st.sidebar.title("Informations")
-nom = st.sidebar.text_input("Nom", value="NOBIME")
-prenom = st.sidebar.text_input("Prénom", value="Tanguy Adonis")
-whatssap = st.sidebar.text_input("Contact", value="+22951518759")
-lien = st.sidebar.text_input("Link", value="www.linkedin.com/in/tanguy-adonis-nobime-078166200")
-hommage = st.sidebar.text_area("Hommage au professeur", value="Cette application est une oeuvre de l'application du cours de Kevin degila. Mes profondes gratuites à lui pour ce cours, ci-dessous je vous invite à faire un tour sur son compte youtube.")
-ressource = st.sidebar.text_input("Ressource", value="https://www.youtube.com/results?search_query=kevin+degila")
+nom="NOBIME"
+prenom = "Tanguy Adonis"
+whatssap = "+22951518759"
+lien = "www.linkedin.com/in/tanguy-adonis-nobime-078166200"
+hommage = '''Cette application est une oeuvre de l'application du cours de Kevin degila. Mes profondes gratitudes pour ces actions à l'égard de l'IA dans l'écosysteme du Bénin et en Afrique francophone, ci-dessous je vous invite à faire un tour sur son compte youtube.'''
+ressource = "https://www.youtube.com/results?search_query=kevin+degila"
 
 
 
@@ -47,14 +47,13 @@ c1, c2 = st.columns(2)
 
 if upload:
     rec = predict(upload)
-    prob_recyclable = rec * 100      
-    prob_organic = (1-rec)*100
+    
 
     c1.image(Image.open(upload))
-    if prob_recyclable > 50:
-        c2.write(f"Nous sommes certain à {prob_recyclable:.2f} % que l'objet est recyclable")
+    if rec == 1:
+        c2.write(f"Je pense que l'objet est recyclable")
     else:
-        c2.write(f"Nous sommes certain à {prob_organic:.2f} % que l'objet n'est pas recyclable")
+        c2.write(f"Je ne crois pas que l'objet soit recyclable")
 
 # Affichage des informations dans la barre latérale
 st.sidebar.write(f"Nom: {nom}")
